@@ -43,7 +43,14 @@ export function SkinnedInput({ isRequired = false, placeholder }: DefaultInputPr
   return (
     <div style={style.container}>
       {isRequired && isEmpty ? (
-        <div style={{ width: "100%", height: "100%", position: "absolute", pointerEvents: "none" }}>
+        <div
+          style={{
+            width: "100%",
+            height: "100%",
+            position: "absolute",
+            pointerEvents: "none"
+          }}
+        >
           <div style={style.label}>(required)</div>
         </div>
       ) : (
@@ -54,7 +61,7 @@ export function SkinnedInput({ isRequired = false, placeholder }: DefaultInputPr
     </div>
   );
 }
-export function UnderLineInput(props: DefaultInputProp) {
+export function UnderlineInput(props: DefaultInputProp) {
   const style = {
     container: {
       display: "flex",

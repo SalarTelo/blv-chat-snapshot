@@ -1,4 +1,6 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import { logError } from "vite/dist/node/server/middlewares/error";
+import { forEach } from "lodash";
 import StylesCSS from "./stylesheet.module.scss";
 import { colors, font, gap, radius, shadow } from "../../../../theme/variables";
 import Accordion from "../../../../components/atom/accordion";
@@ -6,14 +8,22 @@ import { FilterIcon, HomeIcon, PlusIcon } from "../../../../components/atom/icon
 import HeaderNsub from "../../../../components/atom/headerNsub";
 import { BasicButton, PlusButton } from "../../../../components/atom/buttons";
 import { HorizontalSeparator, VerticalSeparator } from "../../../../components/atom/separator";
-import { UnderLineInput } from "../../../../components/atom/Input";
+import { UnderlineInput } from "../../../../components/atom/Input";
 import {
+  CompanyList,
   Container,
   FilterRow,
-  UserTitle,
-  CompanyList,
-  PropertyContainer
+  PropertyContainer,
+  UserTitle
 } from "./styled-components";
+import { BoldDG, FontSizes } from "../../../../components/atom/Text";
+import { ICompany, IProperty } from "../../../../types/types";
+import { useAppDispatch, useAppSelector } from "../../../../redux/hooks";
+import {
+  SET_SELECTED_PROJECT,
+  SET_SELECTED_PROPERTY,
+  UPDATE_CURRENT_PROJECT
+} from "../../../../redux/action-types";
 
 function FooterForm() {
   const [isOpen, setIsOpen] = useState<boolean>(false);
@@ -71,7 +81,7 @@ function FooterForm() {
       </div>
       {isOpen ? (
         <form style={style.form}>
-          <UnderLineInput placeholder="org nr." isRequired />
+          <UnderlineInput placeholder="org nr." isRequired />
           <div style={style.form.buttonContainer}>
             <BasicButton
               style={{ flex: 1 }}
@@ -100,7 +110,7 @@ function PropertyItem({
 }: {
   name: string;
   isSelected: boolean;
-  onClick: () => void;
+  onClick?: () => void;
 }) {
   const style = {
     listItem: {
@@ -118,7 +128,7 @@ function PropertyItem({
         <div className={StylesCSS.tabBar} style={style.tab} />
         <HomeIcon color={colors.darkGray} />
         <VerticalSeparator color={colors.darkGray} length={16} />
-        <HeaderNsub HeaderText={name ?? "No Name"} SubText="1 Project" />
+        <HeaderNsub HeaderText={name} SubText="1 Project" />
       </div>
       <div className={StylesCSS.right}>
         <PlusButton height={10} width={10} color={colors.darkGray} />
@@ -127,62 +137,58 @@ function PropertyItem({
   );
 }
 function ServerList() {
-  const [selectedProperty, setSelectedProperty] = useState<number>(() => 0);
-  const array = [
-    {
-      id: 125121,
-      name: "Property 1",
-      projects: [
-        {
-          id: 125213,
-          name: "Project 1"
-        },
-        {
-          id: 512342,
-          name: "Project 2"
-        },
-        {
-          id: 125161,
-          name: "Project 3"
-        }
-      ]
-    },
-    {
-      id: 151251,
-      name: "Property 2",
-      projects: [
-        {
-          id: 152321,
-          name: "Project 1"
-        }
-      ]
-    }
-  ];
+  const selector = useAppSelector((state) => state.app);
+  const dispatch = useAppDispatch();
+  const [selectedProperty, setSelectedProperty] = useState<string>();
+  const [companyList, setCompanyList] = useState<ICompany[]>();
+
+  const onPropertySelect = (property: IProperty) => {
+    dispatch({
+      type: SET_SELECTED_PROJECT,
+      payload: property.projects[0]
+    });
+    dispatch({
+      type: SET_SELECTED_PROPERTY,
+      payload: property
+    });
+    setSelectedProperty(property.id);
+  };
+
+  useEffect(() => {
+    setCompanyList(selector.companyList);
+    setSelectedProperty(selector.selectedPropertyId);
+  }, [selector.companyList, selector.selectedPropertyId]);
   return (
     <CompanyList>
-      {array.map((property, index) => {
+      {companyList?.map((company) => {
         return (
           <Accordion
-            key={property.id}
+            key={company.id}
             headerContent={
               <HeaderNsub
-                HeaderText={`#Company ${index + 1}`}
-                SubText={`${property.projects.length} Property`}
+                HeaderText={`#${company.name}`}
+                SubText={`${company.properties.length} properties`}
               />
             }
           >
             <PropertyContainer>
-              {property.projects.map((project) => {
+              {company.properties.map((property) => {
                 return (
                   <PropertyItem
-                    onClick={() => setSelectedProperty(project.id)}
-                    key={project.id}
-                    name={project.name}
-                    isSelected={selectedProperty === project.id}
+                    key={property.id}
+                    name={property.name}
+                    isSelected={selectedProperty === property.id}
+                    onClick={() => onPropertySelect(property)}
                   />
                 );
               })}
-              <div style={{ gap: gap.medium, display: "flex", flexDirection: "column" }}>
+              <div
+                style={{
+                  gap: gap.medium,
+                  display: "flex",
+                  flexDirection: "column"
+                }}
+              >
                 <HorizontalSeparator color={colors.gray} length={48} />
                 <PlusButton height={13} width={13} />
               </div>
@@ -193,21 +199,28 @@ function ServerList() {
     </CompanyList>
   );
 }
-function ServerView() {
-  const [titleName] = useState<String>("Bygglovsverket");
+
+function View() {
+  const username = useAppSelector((state) => state.app.userData.name);
   return (
     <Container>
-      <UserTitle>{titleName}</UserTitle>
-      <FilterRow>
-        <BasicButton>
-          <FilterIcon height={14} width={14} color={colors.gray} />
-          <div>Filter</div>
-        </BasicButton>
-      </FilterRow>
+      <UserTitle>
+        <BoldDG fontSize={FontSizes.xLarge}>{username}</BoldDG>
+      </UserTitle>
+      {false ? (
+        <FilterRow>
+          <BasicButton>
+            <FilterIcon height={14} width={14} color={colors.gray} />
+            <div>Filter</div>
+          </BasicButton>
+        </FilterRow>
+      ) : (
+        ""
+      )}
       <ServerList />
       <FooterForm />
     </Container>
   );
 }
 
-export default ServerView;
+export default View;

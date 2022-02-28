@@ -1,38 +1,9 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
+import axios from "axios";
 import { colors, font, gap } from "../../../../theme/variables";
-
-const messageList = [
-  {
-    id: 121251,
-    username: "Jhona Alver",
-    profileIconSrc: "https://picsum.photos/200/300",
-    timeStamp: new Date().toISOString().substring(0, 10),
-    message:
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam."
-  },
-  {
-    id: 251421,
-    username: "Dilan Badikanli",
-    profileIconSrc: "https://picsum.photos/200/300",
-    timeStamp: new Date().toISOString().substring(0, 10),
-    message: "dolore magna aliqua. Ut enim ad minim veniam."
-  },
-  {
-    id: 415251,
-    username: "Dilan Badikanli",
-    profileIconSrc: "https://picsum.photos/200/300",
-    timeStamp: new Date().toISOString().substring(0, 10),
-    message: "Quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat."
-  },
-  {
-    id: 321251,
-    username: "Jhona Alver",
-    profileIconSrc: "https://picsum.photos/200/300",
-    timeStamp: new Date().toISOString().substring(0, 10),
-    message: "Duis aute irure dolor in reprehenderit in voluptate velit esse cillum."
-  }
-];
+import { IMessage, IProject, IUser } from "../../../../types/types";
+import { useAppSelector } from "../../../../redux/hooks";
 
 const Container = styled.div`
   font-size: ${font.size.medium};
@@ -87,6 +58,7 @@ const MessageRight = styled.div`
   display: flex;
   flex-direction: column;
 `;
+
 type MessageProp = React.PropsWithChildren<{
   username: string;
   profileIconSrc: string;
@@ -108,25 +80,61 @@ function UserMessage({ children, profileIconSrc, username, timeStamp }: MessageP
     </MessageContainer>
   );
 }
-function ChatBoxContainer() {
+
+function Chatbox() {
+  const [messageList, setMessageList] = useState<IMessage[]>();
+  const [userList, setUserList] = useState<IUser[]>();
+  const selector = useAppSelector((state) => state.app);
+
+  useEffect(() => {
+    const projects: IProject[] = selector.projectList.filter(
+      (project: IProject) => project.id === selector.selectedProjectId
+    );
+    if (projects.length > 0) {
+      const project = projects[0];
+      setMessageList(project.messages);
+      setUserList(project.users);
+    } else {
+      setMessageList([]);
+    }
+  }, [selector.selectedPropertyId, selector.selectedProjectId]);
+
+  function GetUserFromMessage(message: IMessage) {
+    if (userList && userList?.length > 0) {
+      const users: IUser[] = userList.filter((user: IUser) => message.userId === user.id);
+      if (users.length > 0){
+        return users[0];
+      }
+      return null;
+    }
+  }
+  function GetMessageUsername(message: IMessage): string {
+    const user = GetUserFromMessage(message);
+    if (user)
+      return user.name;
+    return "User Has No Name";
+  }
 
   return (
     <Container>
       <MessageList>
-        {messageList.map((value) => {
-          return (
-            <UserMessage
-              username={value.username}
-              profileIconSrc="https://picsum.photos/200/300"
-              timeStamp={new Date().toISOString().substring(0, 10)}
-            >
-              {value.message}
-            </UserMessage>
-          );
-        })}
+        {messageList
+          ? messageList.map((message) => {
+              return (
+                <UserMessage
+                  key={message.id}
+                  username={GetMessageUsername(message)}
+                  profileIconSrc={GetUserFromMessage(message)?.profilePictureURL}
+                  timeStamp={new Date().toISOString().substring(0, 10)}
+                >
+                  {message.message}
+                </UserMessage>
+              );
+            })
+          : ""}
       </MessageList>
     </Container>
   );
 }
 
-export default ChatBoxContainer;
+export default Chatbox;

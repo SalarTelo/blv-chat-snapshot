@@ -1,13 +1,14 @@
-.wrapper{
+.wrapper {
   display: flex;
   flex-direction: row;
   height: 100%;
 }
 
-.content, .sidebar{
+.content,
+.sidebar {
   display: flex;
 }
-.content{
+.content {
   flex: 1;
   flex-direction: column;
 }

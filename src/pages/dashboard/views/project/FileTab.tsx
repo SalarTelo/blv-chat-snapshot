@@ -20,11 +20,11 @@ const FileContainer = styled.div`
   justify-content: flex-start;
   user-select: none;
   cursor: pointer;
-  
-  &:hover{
+
+  &:hover {
     opacity: 0.8;
   }
-  &:active{
+  &:active {
     opacity: 0.6;
   }
 `;
@@ -42,7 +42,6 @@ const CardRight = styled.div`
 const FileInfo = styled.div`
   display: flex;
   flex-direction: column;
-  
 `;
 type CardProp = {
   title: string;
@@ -53,14 +52,14 @@ function FileItem({ title, subtitle }: CardProp) {
     title: {
       fontSize: font.size.medium,
       color: colors.blue,
-      fontWeight: font.weight.normal,
+      fontWeight: font.weight.normal
     },
     subtitle: {
       fontSize: font.size.small,
       color: colors.gray,
-      fontWeight: font.weight.normal,
+      fontWeight: font.weight.normal
     }
-  }
+  };
   return (
     <FileContainer>
       <div style={{ width: "32px" }}>

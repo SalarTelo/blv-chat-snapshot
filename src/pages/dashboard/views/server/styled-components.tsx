@@ -10,10 +10,8 @@ export const Container = styled.div`
   gap: ${gap.small};
   background-color: ${colors.lightGray};
 `;
+
 export const UserTitle = styled.header`
-  font-size: ${font.size.xLarge};
-  color: ${colors.gray};
-  font-weight: ${font.weight.bold};
   padding: ${gap.medium} 0;
   text-align: center;
 `;

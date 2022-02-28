@@ -4,8 +4,7 @@ export const font = {
     medium: "15px",
     large: "18px",
     xLarge: "24px",
-    xxLarge: "32px",
-
+    xxLarge: "32px"
   },
   weight: {
     thin: 400,
@@ -30,7 +29,6 @@ export const colors = {
 
   purple: "#FABCF4",
   darkPurple: "#EB99E3",
-
 
   lightGray: "#F2F2F2",
   gray: "#c2c2c2",

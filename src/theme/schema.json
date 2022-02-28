@@ -1,6 +1,6 @@
 {
-  "data" : {
-    "light" : {
+  "data": {
+    "light": {
       "id": "T_001",
       "name": "Light",
       "colors": {
@@ -17,7 +17,7 @@
       },
       "font": "Open Sans"
     },
-    "dark" : {
+    "dark": {
       "id": "T_002",
       "name": "Dark",
       "colors": {

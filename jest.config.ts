@@ -10,7 +10,7 @@ export default {
   // Stop running tests after `n` failures
   // bail: 0,
 
-  // The directory where Jest should store its cached dependency information
+  // The directory where Jest should reducer its cached dependency information
   // cacheDirectory: "/private/var/folders/3x/qg_mp82s333_ckvcflnwtzj00000gn/T/jest_dx",
 
   // Automatically clear mock calls, instances and results before every test
@@ -31,7 +31,7 @@ export default {
   // ],
 
   // Indicates which provider should be used to instrument code for coverage
-  coverageProvider: "v8",
+  coverageProvider: "v8"
 
   // A list of reporter names that Jest uses when writing coverage reports
   // coverageReporters: [

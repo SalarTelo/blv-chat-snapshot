@@ -1,7 +1,7 @@
 @import "../../../../theme/colors";
 @import "../../../../theme/sizings";
 
-.listItem{
+.listItem {
   width: 100%;
   display: flex;
   flex-direction: row;
@@ -11,44 +11,42 @@
   align-items: center;
   user-select: none;
 
-  &:hover{
+  &:hover {
     opacity: 1;
   }
-  .left{
+  .left {
     cursor: pointer;
     flex: 1;
     display: flex;
     flex-direction: row;
     align-items: center;
     gap: $gap-s;
-    &:hover{
+    &:hover {
       .tabBar {
         height: $font-l * 1.2;
         width: 5px;
       }
     }
-    &:active{
+    &:active {
       .tabBar {
         height: $font-l * 1.3;
         width: 5px;
       }
     }
-    .tabBar{
-      height: $font-l ;
+    .tabBar {
+      height: $font-l;
       transition: 0.1s;
       border-radius: 999px;
     }
   }
 
-  .right{
+  .right {
     font-size: $font-l;
     font-weight: $weight-semiBold;
     color: $dark-gray;
     user-select: inherit;
-    &:hover{
+    &:hover {
       font-size: 20px;
     }
   }
 }
-
-

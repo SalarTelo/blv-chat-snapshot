@@ -1,12 +1,13 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import TextareaAutosize from "react-textarea-autosize";
-import StylesCSS from "./stylesheet.module.scss";
 import { colors, font, gap, shadow } from "../../../../theme/variables";
 import { VerticalSeparator } from "../../../../components/atom/separator";
 import { PlusButton } from "../../../../components/atom/buttons";
-import { InputTextArea } from "../../../../components/atom/Input";
-import ChatBoxContainer from "./chat-box";
+import Chatbox from "./chat-box";
+import { IProject } from "../../../../types/types";
+import { useAppDispatch, useAppSelector } from "../../../../redux/hooks";
+import { SET_SELECTED_PROJECT } from "../../../../redux/action-types";
 
 const ChatWrapper = styled.div`
   display: flex;
@@ -155,37 +156,46 @@ function ChatTextArea({ onSubmit }: { onSubmit?: React.KeyboardEvent<HTMLTextAre
   };
   return <TextareaAutosize style={style} placeholder="Write here..." onKeyUp={onSubmit} />;
 }
-function ChatView() {
-  const projectList = [
-    {
-      id: 215125,
-      name: "Project 1"
-    },
-    {
-      id: 125232,
-      name: "Project 2"
-    },
-    {
-      id: 151231,
-      name: "Project 3"
+function View() {
+  const [projectList, setProjectList] = useState<IProject[]>();
+  const selector = useAppSelector((state) => state.app);
+  const dispatch = useAppDispatch();
+  const [selectedProject, setSelectedProject] = useState<IProject>();
+
+  useEffect(() => {
+    const list = selector.projectList.filter(
+      (project: IProject) => project.propertyId === selector.selectedPropertyId
+    );
+    if (list.length > 0) {
+      setProjectList(list);
+      setSelectedProject(list[0]);
     }
-  ];
-  const [selectedProject, setSelectedProject] = useState<number>(projectList[0].id);
+  }, [selector.selectedPropertyId]);
+
+  function onSelectProject(project: IProject) {
+    setSelectedProject(project);
+    dispatch({
+      type: SET_SELECTED_PROJECT,
+      payload: project
+    });
+  }
+
+  if (selector.selectedPropertyId === "") return <></>;
 
   return (
     <ChatWrapper>
       <ProjectContainer>
-        {projectList.map((project) => {
+        {projectList?.map((project) => {
           return (
             <div
               key={project.id}
               onClick={() => {
-                setSelectedProject(project.id);
+                onSelectProject(project);
               }}
               style={{
                 cursor: "pointer",
                 userSelect: "none",
-                opacity: selectedProject === project.id ? 1 : 0.6
+                opacity: selectedProject?.id === project.id ? 1 : 0.6
               }}
             >
               {project.name}
@@ -196,7 +206,6 @@ function ChatView() {
         <PlusButton height={13} width={13} />
       </ProjectContainer>
       <TimelineContainer>
-
         <TimelineTab state={TimelineTabState.finished} label="Start Project!" />
         <TimelineConnector state={TimelineConnectorState.FToIP} />
         <TimelineTab state={TimelineTabState.inProgress} label="Task 1" />
@@ -210,7 +219,7 @@ function ChatView() {
         <TimelineTab state={TimelineTabState.unfinished} label="Finish Project!" />
       </TimelineContainer>
       <MessageContainer>
-        <ChatBoxContainer />
+        <Chatbox />
       </MessageContainer>
       <InputContainer>
         <ChatTextArea />
@@ -219,4 +228,4 @@ function ChatView() {
   );
 }
 
-export default ChatView;
+export default View;

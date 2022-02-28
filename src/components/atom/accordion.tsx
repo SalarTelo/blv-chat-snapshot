@@ -3,9 +3,7 @@ import styled from "styled-components";
 import { colors, gap, radius, shadow } from "../../theme/variables";
 import { ArrowIcon } from "./icons";
 
-const Container = styled.div`
-  
-`;
+const Container = styled.div``;
 const HeaderContent = styled.div`
   user-select: none;
   cursor: pointer;
@@ -45,7 +43,8 @@ function Accordion({ children, onClose, onOpen, onToggle, headerContent }: props
             onToggle?.(!currentSate);
             return !currentSate;
           })
-        }>
+        }
+      >
         {headerContent}
         <ArrowIcon
           height={10}

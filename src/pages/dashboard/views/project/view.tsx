@@ -37,7 +37,7 @@ const TabContainer = styled.div`
   padding: ${gap.small} ${gap.medium};
 `;
 
-function ProjectView() {
+function View() {
   const [tabIndex, setTabIndex] = useState<number>(0);
   function GetTab() {
     switch (tabIndex) {
@@ -68,4 +68,4 @@ function ProjectView() {
   );
 }
 
-export default ProjectView;
+export default View;
