@@ -6,7 +6,7 @@ import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 
 // Pages
 import { Provider } from "react-redux";
-import ChatPage from "./pages/dashboard/dashboard-page";
+import ChatPage from "./pages/dashboard/dashboard.page";
 import LoginPage from "./pages/login/page";
 import { store } from "./redux/store";
 

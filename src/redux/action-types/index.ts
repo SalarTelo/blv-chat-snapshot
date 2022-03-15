@@ -1,16 +1,20 @@
+export const SET_INIT_DATA: string = "SET_INIT_DATA";
+export const SET_OVERLAY_STATE: string = "SET_OVERLAY_STATE";
+
 export const SET_SELECTED_PROJECT: string = "SET_SELECTED_PROJECT";
+export const SET_SELECTED_COMPANY: string = "SET_SELECTED_COMPANY";
 export const SET_SELECTED_PROPERTY: string = "SET_SELECTED_PROPERTY";
-
-export const ADD_MESSAGE_TO_SELECTED_PROJECT: string = "ADD_MESSAGE_TO_SELECTED_PROJECT";
-export const REMOVE_MESSAGE_FROM_SELECTED_PROJECT: string = "REMOVE_MESSAGE_FROM_SELECTED_PROJECT";
-
+export const ADD_MESSAGE: string = "ADD_MESSAGE_TO_SELECTED_PROJECT";
+export const REMOVE_MESSAGE: string = "REMOVE_MESSAGE_FROM_SELECTED_PROJECT";
 export const ADD_COMPANY: string = "ADD_COMPANY";
 export const REMOVE_COMPANY: string = "REMOVE_COMPANY";
-
 export const ADD_PROPERTY: string = "ADD_PROPERTY";
 export const REMOVE_PROPERTY: string = "REMOVE_PROPERTY";
-
 export const ADD_PROJECT: string = "ADD_PROJECT";
 export const REMOVE_PROJECT: string = "REMOVE_PROJECT";
-
-export const SET_INIT_DATA: string = "SET_INIT_DATA";
+export const ADD_HISTORY: string = "ADD_HISTORY";
+export const REMOVE_HISTORY: string = "REMOVE_HISTORY";
+export const ADD_FILE: string = "ADD_FILE";
+export const REMOVE_FILE: string = "REMOVE_FILE";
+export const ADD_USER: string = "ADD_USER";
+export const REMOVE_USER: string = "REMOVE_USER";

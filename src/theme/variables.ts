@@ -18,8 +18,8 @@ export const colors = {
   red: "#FF9494",
   darkRed: "#f17474",
 
-  blue: "#42A0C8",
-  darkBlue: "#6EBCDF",
+  blue: "#6EBCDF",
+  darkBlue: "#42A0C8",
 
   green: "#A1FF75",
   darkGreen: "#86EC56",
@@ -39,6 +39,7 @@ export const colors = {
 };
 
 export const gap = {
+  xSmall: "4px",
   small: "8px",
   medium: "16px",
   large: "32px",
@@ -48,7 +49,7 @@ export const gap = {
 export const radius = {
   small: "3px",
   normal: "5px",
-  large: "10",
+  large: "10px",
   xLarge: "18px"
 };
 

@@ -1,14 +1,13 @@
 import { Dispatch } from "redux";
 import { ICompany, IMessage, IProject, IProperty } from "../../types/types";
-import { useAppDispatch } from "../hooks";
 
 import {
   ADD_COMPANY,
-  ADD_MESSAGE_TO_SELECTED_PROJECT,
+  ADD_MESSAGE,
   ADD_PROJECT,
   ADD_PROPERTY,
   REMOVE_COMPANY,
-  REMOVE_MESSAGE_FROM_SELECTED_PROJECT,
+  REMOVE_MESSAGE,
   REMOVE_PROJECT,
   REMOVE_PROPERTY,
   SET_SELECTED_PROJECT,
@@ -34,7 +33,7 @@ export const setSelectedProject = (project: IProject) => {
 export const addMessage = (message: IMessage) => {
   return (dispatch: Dispatch) => {
     dispatch({
-      type: ADD_MESSAGE_TO_SELECTED_PROJECT,
+      type: ADD_MESSAGE,
       payload: message
     });
   };
@@ -42,7 +41,7 @@ export const addMessage = (message: IMessage) => {
 export const removeMessage = (message: IMessage) => {
   return (dispatch: Dispatch) => {
     dispatch({
-      type: REMOVE_MESSAGE_FROM_SELECTED_PROJECT,
+      type: REMOVE_MESSAGE,
       payload: message
     });
   };
