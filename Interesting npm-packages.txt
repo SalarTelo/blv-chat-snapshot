@@ -1,0 +1,60 @@
+// mathJS
+https://www.npmjs.com/package/mathjs
+
+Math.js is an extensive math library for JavaScript and Node.js. It features a flexible expression parser with
+support for symbolic computation, comes with a large set of built-in functions and constants, and offers an
+mintegrated solution to work with different data types like numbers, big numbers, complex numbers, fractions, units, and matrices.
+Powerful and easy to use.
+
+///////////////////////////////////
+
+// simple-statistics
+https://www.npmjs.com/package/simple-statistics
+
+A JavaScript implementation of descriptive, regression, and inference statistics.
+
+
+//////////////////////////////////
+
+// math-expression-evaluator
+https://www.npmjs.com/package/math-expression-evaluator
+
+An extremely efficient, flexible and amazing evaluator for Math expression in Javascript.
+
+//////////////////////////////////
+
+
+// cropperjs
+https://www.npmjs.com/package/cropperjs
+
+JavaScript image cropper.
+
+
+//////////////////////////////////
+
+
+// typedoc
+https://www.npmjs.com/package/typedoc
+
+Documentation generator for TypeScript projects.
+
+
+//////////////////////////////////
+
+
+// eslint-plugin-tsdoc
+https://www.npmjs.com/package/eslint-plugin-tsdoc
+
+This ESLint plugin provides a rule for validating that TypeScript doc comments conform to the TSDoc specification.
+
+
+//////////////////////////////////
+
+
+// react-colorful
+https://www.npmjs.com/package/eslint-plugin-tsdoc
+
+This ESLint plugin provides a rule for validating that TypeScript doc comments conform to the TSDoc specification.
+
+
+//////////////////////////////////

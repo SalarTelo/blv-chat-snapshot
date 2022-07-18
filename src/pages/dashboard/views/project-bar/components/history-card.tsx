@@ -16,7 +16,7 @@ const Container = styled.div`
   border-radius: ${radius.small};
   display: flex;
   flex-direction: column;
-  width: 310px;
+  width: 100%;
   justify-content: center;
   align-items: flex-start;
   box-shadow: ${shadow.defaultBox};
@@ -140,17 +140,17 @@ export default function HistoryCard({
   const GetText = (card: IHistory): string => {
     switch (card.type) {
       case CardType.OfferSent:
-        return `${GetUser(card.senderId).name} sent an offer!`;
+        return `${GetUser(card.senderId).displayName} sent an offer!`;
       case CardType.OfferDeclined:
-        return `${GetUser(card.senderId).name} declined the offer!`;
+        return `${GetUser(card.senderId).displayName} declined the offer!`;
       case CardType.OfferAccepted:
-        return `${GetUser(card.senderId).name} declined the offer!`;
+        return `${GetUser(card.senderId).displayName} declined the offer!`;
       case CardType.FileUploaded:
-        return `${GetUser(card.senderId).name} uploaded a file!`;
+        return `${GetUser(card.senderId).displayName} uploaded a file!`;
       case CardType.EventNotification:
-        return `${GetUser(card.senderId).name} requested a response!`;
+        return `${GetUser(card.senderId).displayName} requested a response!`;
       case CardType.GeneralNotifcation:
-        return `${GetUser(card.senderId).name}  requested a response!`;
+        return `${GetUser(card.senderId).displayName}  requested a response!`;
 
       default:
         return "[ERROR] CARD TYPE DOES NOT EXIST";

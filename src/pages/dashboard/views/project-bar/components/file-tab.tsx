@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
-import FileSaver from "file-saver";
 import SidebarTab from "./tab-template";
 import { colors, font, gap, radius, shadow } from "../../../../../theme/variables";
 import { DownloadIcon, MediaIcon } from "../../../../../components/icons";
 import { useAppSelector } from "../../../../../redux/hooks";
 import { IFile } from "../../../../../types/types";
+import { FormatBytes } from "../../../../../utils/utils";
 
 const Container = styled.div`
   display: flex;
@@ -15,10 +15,10 @@ const Container = styled.div`
   height: 100%;
 `;
 const FileContainer = styled.div`
-  width: 300px;
   display: flex;
   flex-direction: row;
   align-items: center;
+  width: 300px;
   gap: ${gap.medium};
   justify-content: flex-start;
   user-select: none;
@@ -34,7 +34,7 @@ const FileContainer = styled.div`
 const CardRight = styled.div`
   background-color: ${colors.white};
   padding: ${gap.small} ${gap.medium};
-  border-radius: ${radius.normal};
+  border-radius: ${radius.medium};
   width: 100%;
   display: flex;
   flex-direction: row;
@@ -43,23 +43,14 @@ const CardRight = styled.div`
   box-shadow: ${shadow.defaultBox};
 `;
 const FileInfo = styled.div`
+  width: 100%;
   display: flex;
   flex-direction: column;
 `;
 const DownloadContainer = styled.a`
   text-decoration: none;
 `;
-function FormatBytes(bytes: number, decimals = 2) {
-  if (bytes === 0) return "0 Bytes";
 
-  const k = 1024;
-  const dm = decimals < 0 ? 0 : decimals;
-  const sizes = ["Bytes", "KB", "MB", "GB", "TB", "PB", "EB", "ZB", "YB"];
-
-  const i = Math.floor(Math.log(bytes) / Math.log(k));
-
-  return `${parseFloat((bytes / k ** i).toFixed(dm))} ${sizes[i]}`;
-}
 function FileItem({ data }: { data: IFile }) {
   const style = {
     title: {
@@ -80,10 +71,14 @@ function FileItem({ data }: { data: IFile }) {
       </div>
       <CardRight>
         <FileInfo>
-          <div style={style.title}>{data.name}</div>
+          <div style={style.title}>
+            {data.name.length > 26 ? `${data.name.substring(0, 25)}...` : data.name}
+          </div>
           <div style={style.subtitle}>{FormatBytes(data.size * 1000, 2)}</div>
         </FileInfo>
-        <DownloadIcon height={15} width={15} color={colors.gray} />
+        <div>
+          <DownloadIcon height={15} width={15} color={colors.gray} />
+        </div>
       </CardRight>
     </FileContainer>
   );
@@ -103,7 +98,7 @@ function FileTab() {
   }, [selector.selectedProjectId, selector.files]);
 
   return (
-    <SidebarTab title="Files" subTitle={`${fileList.length} files`}>
+    <SidebarTab width="100%" title="Files" subTitle={`${fileList.length} files`}>
       <Container>
         {fileList.map((file: IFile) => {
           return (
@@ -112,6 +107,7 @@ function FileTab() {
               href={file.url}
               rel="noreferrer noopener"
               target="_blank"
+              download
               role="button"
             >
               <FileItem data={file} />

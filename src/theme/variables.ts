@@ -15,6 +15,9 @@ export const font = {
 };
 
 export const colors = {
+
+  blvGreen: "#4FC6B4",
+
   red: "#FF9494",
   darkRed: "#f17474",
 
@@ -22,10 +25,10 @@ export const colors = {
   darkBlue: "#42A0C8",
 
   green: "#A1FF75",
-  darkGreen: "#86EC56",
+  darkGreen: "#74cd4a",
 
   yellow: "#FFE175",
-  darkYellow: "#F6CF44",
+  darkYellow: "#eec031",
 
   purple: "#FABCF4",
   darkPurple: "#EB99E3",
@@ -48,7 +51,7 @@ export const gap = {
 };
 export const radius = {
   small: "3px",
-  normal: "5px",
+  medium: "5px",
   large: "10px",
   xLarge: "18px"
 };

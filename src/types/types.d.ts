@@ -1,7 +1,8 @@
 interface IModel {
   id: string;
-  createdAt: string;
-  updatedAt: string;
+}
+export interface IToken extends IModel {
+  token: string;
 }
 export interface IProperty extends IModel {
   name: string;
@@ -15,15 +16,9 @@ export interface ICompany extends IModel {
   users: IUser[];
 }
 export interface IUser extends IModel {
-  name: string;
+  username: string;
+  displayName: string;
   avatarURL: string;
-}
-export interface IMessage extends IModel {
-  user: IUser;
-  content: string;
-  userId: string;
-  type: number;
-  projectId: string;
 }
 export interface IFile extends IModel {
   name: string;
@@ -31,6 +26,18 @@ export interface IFile extends IModel {
   projectId: string;
   size: number;
   url: string;
+  createdAt: string;
+  updatedAt: string;
+}
+export interface IMessage extends IModel {
+  user: IUser;
+  content: string;
+  userId: string;
+  type: number;
+  projectId: string;
+  files: IFile[];
+  createdAt: string;
+  updatedAt: string;
 }
 export interface IHistory extends IModel {
   type: number;
@@ -40,6 +47,8 @@ export interface IHistory extends IModel {
   isNotifiable: boolean;
   hasNotified: boolean;
   notifiedUsers: IUser[];
+  createdAt: string;
+  updatedAt: string;
 }
 export interface IProject extends IModel {
   name: string;
@@ -68,4 +77,3 @@ export interface IProject extends IModel {
   va: boolean;
   vvs: boolean;
 }
-export interface IOrder extends IModel {}

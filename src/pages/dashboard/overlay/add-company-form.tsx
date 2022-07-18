@@ -85,7 +85,6 @@ export default function AddCompanyForm() {
               label="Reference Person"
             />
           </InputRow>
-
         </FormSection>
 
         <FormSection title="Property description">

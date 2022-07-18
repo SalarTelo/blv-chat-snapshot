@@ -1,9 +1,10 @@
 export const SET_INIT_DATA: string = "SET_INIT_DATA";
 export const SET_OVERLAY_STATE: string = "SET_OVERLAY_STATE";
-
+export const SET_PROJECT_STATUS: string = "SET_PROJECT_STATUS";
 export const SET_SELECTED_PROJECT: string = "SET_SELECTED_PROJECT";
 export const SET_SELECTED_COMPANY: string = "SET_SELECTED_COMPANY";
 export const SET_SELECTED_PROPERTY: string = "SET_SELECTED_PROPERTY";
+export const SET_USER_DATA: string = "SET_USER_DATA";
 export const ADD_MESSAGE: string = "ADD_MESSAGE_TO_SELECTED_PROJECT";
 export const REMOVE_MESSAGE: string = "REMOVE_MESSAGE_FROM_SELECTED_PROJECT";
 export const ADD_COMPANY: string = "ADD_COMPANY";
@@ -18,3 +19,4 @@ export const ADD_FILE: string = "ADD_FILE";
 export const REMOVE_FILE: string = "REMOVE_FILE";
 export const ADD_USER: string = "ADD_USER";
 export const REMOVE_USER: string = "REMOVE_USER";
+export const SET_AUTH_TOKEN: string = "SET_AUTH_TOKEN";

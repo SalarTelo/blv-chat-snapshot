@@ -20,7 +20,7 @@ const Header = styled.div`
   padding: 14px ${gap.medium};
   box-shadow: ${shadow.defaultBox};
   background-color: ${colors.white};
-  border-radius: ${radius.normal};
+  border-radius: ${radius.medium};
 
   cursor: pointer;
   &:hover {
@@ -40,7 +40,7 @@ const List = styled.div`
   padding: ${gap.small} ${gap.medium};
   box-shadow: ${shadow.defaultBox};
   background-color: ${colors.white};
-  border-radius: ${radius.normal};
+  border-radius: ${radius.medium};
   top: 55px;
 `;
 

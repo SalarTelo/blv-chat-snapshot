@@ -11,6 +11,9 @@ type props = {
   transitionTime?: string;
 };
 const RoundedCube = styled.div<props>`
+  display: flex;
+  justify-content: center;
+  align-items: center;
   height: ${({ size }) => `${size}px` || "25px"};
   width: ${({ size }) => `${size}px` || "25px"};
 

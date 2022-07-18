@@ -118,7 +118,7 @@ export default function AddProjectForm() {
   };
 
   const handleSubmit = async () => {
-    const res = await AddProject(data, selectedProperty, selector.userData);
+    const res: IProject = await AddProject(data, selectedProperty, selector.userData);
     dispatch({ type: ADD_PROJECT, payload: res });
     dispatch({ type: SET_OVERLAY_STATE, payload: 0 });
   };

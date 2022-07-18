@@ -17,11 +17,14 @@ import {
   SET_SELECTED_COMPANY,
   REMOVE_FILE,
   ADD_FILE,
-  SET_OVERLAY_STATE
+  SET_OVERLAY_STATE,
+  SET_PROJECT_STATUS,
+  SET_AUTH_TOKEN,
+  SET_USER_DATA
 } from "../action-types";
 import { ICompany, IFile, IHistory, IMessage, IProject, IProperty, IUser } from "../../types/types";
 
-// TODO: MAJOR! NEED TO SEPARATE ALL OF THESE IN TO THEIR OWN REDUCERS AND SET UP A PROPER ACTION SYSTEM
+// TODO: NEED TO SEPARATE ALL OF THESE IN TO THEIR OWN REDUCERS AND SET UP A PROPER ACTION SYSTEM
 
 type AppData = {
   userData: IUser;
@@ -32,6 +35,7 @@ type AppData = {
   files: IFile[];
   users: IUser[];
 
+  auth_token: string;
   selectedProjectId: string;
   selectedPropertyId: string;
   selectedCompanyId: string;
@@ -42,6 +46,7 @@ type AppData = {
   // 1 = Add Company
   // 2 = Add Property
   // 3 = Add Project
+  // 4 = Upload Files
   overlayState: number;
 };
 interface SetOverlayStateAction {
@@ -108,6 +113,10 @@ interface RemoveFileAction {
   type: string;
   payload: IFile;
 }
+interface SetProjectStatus {
+  type: string;
+  payload: number;
+}
 interface SetInitDataAction {
   type: string;
   payload: {
@@ -121,7 +130,19 @@ interface SetInitDataAction {
     histories: IHistory[];
   };
 }
+interface SetUserData {
+  type: string;
+  payload: IUser;
+}
+interface SetToken {
+  type: string;
+  payload: string;
+}
+
 type Action =
+  | SetToken
+  | SetUserData
+  | SetProjectStatus
   | SetOverlayStateAction
   | AddUserAction
   | RemoveUserAction
@@ -143,7 +164,8 @@ type Action =
 const initialState: AppData = {
   userData: {
     id: "",
-    name: ""
+    displayName: "",
+    username: ""
   },
   histories: [],
   companies: [],
@@ -151,6 +173,7 @@ const initialState: AppData = {
   projects: [],
   files: [],
   users: [],
+  auth_token: "",
   selectedProjectId: "",
   selectedPropertyId: "",
   selectedCompanyId: "",
@@ -158,7 +181,6 @@ const initialState: AppData = {
 };
 
 const appReducer = (state: AppData = initialState, action: Action) => {
-
   if (action.type === SET_INIT_DATA) {
     return {
       ...state,
@@ -169,6 +191,26 @@ const appReducer = (state: AppData = initialState, action: Action) => {
       histories: action.payload.histories,
       files: action.payload.files,
       users: action.payload.users
+    };
+  }
+  if (action.type === SET_PROJECT_STATUS) {
+    return {
+      ...state,
+      projects: state.projects.map((project: IProject) => {
+        if (project.id === state.selectedProjectId) {
+          return {
+            ...project,
+            stageStatus: action.payload
+          };
+        }
+        return project;
+      })
+    };
+  }
+  if (action.type === SET_USER_DATA) {
+    return {
+      ...state,
+      userData: action.payload
     };
   }
   if (action.type === SET_SELECTED_COMPANY) {
@@ -223,7 +265,7 @@ const appReducer = (state: AppData = initialState, action: Action) => {
     return {
       ...state,
       projects: state.projects.map((project: IProject) => {
-        if(project.id === action.payload.projectId) {
+        if (project.id === action.payload.projectId) {
           return {
             ...project,
             messages: [...project.messages, action.payload]
@@ -285,7 +327,12 @@ const appReducer = (state: AppData = initialState, action: Action) => {
       )
     };
   }
-
+  if (action.type === SET_AUTH_TOKEN) {
+    return {
+      ...state,
+      auth_token: action.payload
+    };
+  }
   if (action.type === ADD_COMPANY) {
     return {
       ...state,

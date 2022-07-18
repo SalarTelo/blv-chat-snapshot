@@ -65,16 +65,18 @@ export default function ServerList() {
             }
           >
             <PropertyContainer>
-              {selector.properties.map((property: IProperty) => {
-                return (
-                  <PropertyItem
-                    key={property.id}
-                    name={property.name}
-                    isSelected={selector.selectedPropertyId === property.id}
-                    onClick={() => onPropertySelect(property)}
-                  />
-                );
-              })}
+              {selector.properties
+                .filter((property: IProperty) => property.companyId === company.id)
+                .map((property: IProperty) => {
+                  return (
+                    <PropertyItem
+                      key={property.id}
+                      name={property.name}
+                      isSelected={selector.selectedPropertyId === property.id}
+                      onClick={() => onPropertySelect(property)}
+                    />
+                  );
+                })}
               <div
                 style={{
                   gap: gap.medium,

@@ -34,6 +34,5 @@ export const Sidebar = styled.div`
 export const TabContainer = styled.div`
   background-color: ${colors.lightGray};
   height: 100%;
-  width: 100%;
   padding: ${gap.small} ${gap.medium};
 `;

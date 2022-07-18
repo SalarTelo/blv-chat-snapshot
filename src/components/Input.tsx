@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import styled from "styled-components";
-import TextareaAutosize from "react-textarea-autosize";
 import { colors, font, gap, radius } from "../theme/variables";
 
 type DefaultInputProp = {
@@ -72,7 +71,7 @@ export function UnderlineInput({ isRequired, ...props }: DefaultInputProp) {
       height: "2px",
       width: "100%",
       borderRadius: radius.small,
-      backgroundColor: colors.lightGray
+      backgroundColor: colors.gray
     }
   };
   return (

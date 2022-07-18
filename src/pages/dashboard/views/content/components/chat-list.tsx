@@ -1,65 +1,49 @@
-import React, { useEffect, useState } from "react";
-import { IMessage, IProject, IUser } from "../../../../../types/types";
-import { useAppSelector } from "../../../../../redux/hooks";
-import UserMessage from "./chat-message";
+import React from "react";
+import { IMessage, IUser } from "../../../../../types/types";
+import { UserMessage, AppendedMessage } from "./chat-message";
+import { MessageScroller, MessageWrapper } from "../styled";
 
-function ChatList() {
-  const [messageList, setMessageList] = useState<IMessage[]>();
-  const [userList, setUserList] = useState<IUser[]>();
-  const selector = useAppSelector((state) => state.app);
+type props = {
+  messages: IMessage[];
+  users: IUser[];
+};
 
-  useEffect(() => {
-    const projects: IProject[] = selector.projects.filter(
-      (project: IProject) => project.id === selector.selectedProjectId
-    );
-    if (projects.length > 0) {
-      const project = projects[0];
-      setMessageList(project.messages.sort((a: IMessage, b: IMessage) => (a.createdAt < b.createdAt ? -1 : ((a.createdAt > b.createdAt) ? 1 : 0))));
-      setUserList(project.users);
-    } else {
-      setMessageList([]);
-    }
-  }, [selector.selectedPropertyId, selector.projects, selector.selectedProjectId]);
-
-  function GetUserFromMessage(message: IMessage): IUser {
-    if (userList && userList?.length > 0) {
-      const users: IUser[] = userList.filter((user: IUser) => message.userId === user.id);
-      if (users.length > 0) {
-        return users[0];
+export default function ChatList({ users, messages }: props) {
+  function GetAuthor(message: IMessage): IUser {
+    if (users.length > 0) {
+      const list: IUser[] = users.filter((user: IUser) => message.userId === user.id);
+      if (list.length > 0) {
+        return list[0];
       }
-      return {
-        createdAt: "",
-        updatedAt: "",
-        id: "",
-        name: "EMPTY - NO USER",
-        avatarURL: ""
-      };
     }
-  }
-  function GetMessageUsername(message: IMessage): string {
-    const user = GetUserFromMessage(message);
-    if (user) return user.name;
-    return "[ERROR] USER NOT FOUND";
+    return {
+      username: "",
+      createdAt: "",
+      updatedAt: "",
+      id: "",
+      displayName: "UNKNOWN USER",
+      avatarURL: ""
+    };
   }
 
   return (
-    <>
-      {messageList
-        ? messageList!.map((message) => {
+    <MessageWrapper>
+      <MessageScroller>
+        {messages.map((message: IMessage, index: number, array: IMessage[]) => {
+          if (index === 0 || message.userId !== array[index - 1].userId) {
             return (
-              <UserMessage
-                key={message.id}
-                username={GetMessageUsername(message)}
-                avatarURL={GetUserFromMessage(message)?.avatarURL}
-                timeStamp={new Date().toISOString().substring(0, 10)}
-              >
-                {message.content}
-              </UserMessage>
+              <UserMessage messageData={message} authorData={GetAuthor(message)} key={message.id} />
             );
-          })
-        : ""}
-    </>
+          }
+          return (
+            <AppendedMessage
+              key={message.id}
+              messageData={message}
+              authorData={GetAuthor(message)}
+            />
+          );
+        })}
+      </MessageScroller>
+    </MessageWrapper>
   );
 }
-
-export default ChatList;

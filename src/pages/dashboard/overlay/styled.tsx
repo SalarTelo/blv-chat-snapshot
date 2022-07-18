@@ -6,7 +6,7 @@ export const Container = styled.form`
 
   flex-direction: column;
   padding: ${gap.large};
-  border-radius: ${radius.normal};
+  border-radius: ${radius.medium};
   background-color: ${colors.lightGray};
   box-shadow: ${shadow.defaultBox};
   min-width: 700px;
@@ -44,7 +44,7 @@ export const InputText = styled.input`
   gap: ${gap.medium};
   font-size: ${font.size.medium};
   padding: 12px;
-  border-radius: ${radius.normal};
+  border-radius: ${radius.medium};
   outline-width: 3px;
   outline-color: ${colors.gray};
   box-shadow: ${shadow.defaultBox};
@@ -74,13 +74,13 @@ export const ButtonsContainer = styled.div`
 
 export const TextareaForm = styled.textarea`
   background-color: ${colors.white};
-  border-radius: ${radius.normal};
+  border-radius: ${radius.medium};
   border-style: none;
   box-shadow: ${shadow.defaultBox};
   outline-style: none;
   padding: ${gap.medium};
   color: ${colors.black};
   font-size: ${font.size.medium};
-  font-weight: ${font.weight.normal};
+  font-weight: ${font.weight.thin};
   resize: none;
 `;

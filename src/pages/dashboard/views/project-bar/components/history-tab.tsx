@@ -4,8 +4,9 @@ import { gap } from "../../../../../theme/variables";
 import SidebarTab from "./tab-template";
 import HistoryTabFooter from "./history-tab-footer";
 import HistoryCard from "./history-card";
-import { IFile, IHistory, IUser } from "../../../../../types/types";
+import { IHistory, IUser } from "../../../../../types/types";
 import { useAppSelector } from "../../../../../redux/hooks";
+import { BoldDG, BoldG, FontSizes } from "../../../../../components/Text";
 /*
  TODO: remove this later when history is properly created.
 
@@ -23,6 +24,8 @@ import { useAppSelector } from "../../../../../redux/hooks";
 const Content = styled.div`
   flex: 1;
   display: flex;
+  height: 100%;
+  width: 300px;
   flex-direction: column;
   gap: ${gap.medium};
 `;
@@ -41,7 +44,7 @@ export default function HistoryTab() {
     setProjectHistory(sortedList);
   }, [selector.selectedProjectId, selector.histories]);
 
-  const FindSender = (card: IHistory): IUser => {
+  const GetSender = (card: IHistory): IUser => {
     const users: IUser[] = selector.users.filter((user: IUser) => user.id === card.senderId);
     return users[0];
   };
@@ -51,12 +54,28 @@ export default function HistoryTab() {
     <SidebarTab
       title="History"
       subTitle="This has happened..."
+      width="100%"
       footer={<HistoryTabFooter onRequestRes={onRequestResponse} />}
     >
       <Content>
-        {projectHistory.map((event) => {
-          return <HistoryCard key={event.id} cardData={event} senderData={FindSender(event)} />;
-        })}
+        {projectHistory.length > 0 ? (
+          projectHistory.map((event) => {
+            return <HistoryCard key={event.id} cardData={event} senderData={GetSender(event)} />;
+          })
+        ) : (
+          <BoldG
+            style={{
+              display: "flex",
+              width: "100%",
+              height: "100%",
+              justifyContent: "center",
+              alignItems: "center"
+            }}
+            fontSize={FontSizes.xLarge}
+          >
+            History empty!
+          </BoldG>
+        )}
       </Content>
     </SidebarTab>
   );

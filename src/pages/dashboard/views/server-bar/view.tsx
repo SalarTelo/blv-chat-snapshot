@@ -9,7 +9,7 @@ import CompanyCreationFooter from "./components/company-creation-footer";
 import ServerList from "./components/server-list";
 
 function View() {
-  const username = useAppSelector((state) => state.app.userData.name);
+  const username = useAppSelector((state) => state.app.userData.displayName);
   return (
     <Container>
       <UserTitle>
